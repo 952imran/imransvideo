@@ -127,10 +127,10 @@ function openModal(id) {
   // Sizing based on aspect ratio with mobile-responsive minimum height
   if (item.aspectRatio === 'vertical') {
     modalBox.className = 'bg-brand-card border border-brand-border rounded-2xl w-full max-w-[360px] max-h-[92vh] overflow-hidden relative shadow-2xl z-10 flex flex-col transition-all';
-    mediaContainer.className = 'relative w-full aspect-[9/16] min-h-[360px] max-h-[64vh] bg-black flex items-center justify-center overflow-hidden';
+    mediaContainer.className = 'relative w-full aspect-[9/16] min-h-[360px] max-h-[64vh] bg-black flex items-center justify-center';
   } else {
     modalBox.className = 'bg-brand-card border border-brand-border rounded-2xl w-full max-w-3xl max-h-[92vh] overflow-hidden relative shadow-2xl z-10 flex flex-col transition-all';
-    mediaContainer.className = 'relative w-full aspect-video min-h-[230px] sm:min-h-[380px] bg-black flex items-center justify-center overflow-hidden';
+    mediaContainer.className = 'relative w-full aspect-video min-h-[230px] sm:min-h-[380px] bg-black flex items-center justify-center';
   }
 
   // Render Media: Google Drive Preview OR MP4 Video OR YouTube Embed OR Image
@@ -140,7 +140,8 @@ function openModal(id) {
         src="${item.videoUrl}" 
         title="${item.title}" 
         class="w-full h-full min-h-[230px] sm:min-h-[380px] border-0 rounded-lg" 
-        allow="autoplay; fullscreen" 
+        style="-webkit-transform: translateZ(0); transform: translateZ(0);"
+        allow="autoplay; fullscreen; encrypted-media; picture-in-picture; accelerometer; gyroscope" 
         allowfullscreen>
       </iframe>
     `;
