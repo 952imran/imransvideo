@@ -126,8 +126,8 @@ function openModal(id) {
 
   // Sizing based on aspect ratio with mobile-responsive minimum height
   if (item.aspectRatio === 'vertical') {
-    modalBox.className = 'bg-brand-card border border-brand-border rounded-2xl w-full max-w-[360px] max-h-[92vh] overflow-hidden relative shadow-2xl z-10 flex flex-col transition-all';
-    mediaContainer.className = 'relative w-full aspect-[9/16] min-h-[360px] max-h-[64vh] bg-black flex items-center justify-center';
+    modalBox.className = 'bg-brand-card border border-brand-border rounded-2xl w-full max-w-[380px] max-h-[95vh] overflow-hidden relative shadow-2xl z-10 flex flex-col transition-all';
+    mediaContainer.className = 'relative w-full aspect-[9/16] max-h-[74vh] bg-black flex items-center justify-center';
   } else {
     modalBox.className = 'bg-brand-card border border-brand-border rounded-2xl w-full max-w-3xl max-h-[92vh] overflow-hidden relative shadow-2xl z-10 flex flex-col transition-all';
     mediaContainer.className = 'relative w-full aspect-video min-h-[230px] sm:min-h-[380px] bg-black flex items-center justify-center';
