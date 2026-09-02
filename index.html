@@ -575,8 +575,8 @@
 
   <!-- VIDEO MODAL POPUP (FIXED CLOSE BUTTON & NO SCROLL OVERFLOW) -->
   <div id="videoModal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 hidden overflow-y-auto">
-    <!-- Clickable Dark Backdrop -->
-    <div class="fixed inset-0 bg-black/90 backdrop-blur-md" onclick="closeModal()"></div>
+    <!-- Clickable Dark Backdrop (No blur to prevent mobile GPU compositing black video) -->
+    <div class="fixed inset-0 bg-black/95" onclick="closeModal()"></div>
 
     <!-- Always Visible Floating Close Button (Top Right) -->
     <button onclick="closeModal()" title="Close (Esc)" class="fixed top-4 right-4 z-50 w-11 h-11 rounded-full bg-brand-card hover:bg-emerald-500 hover:text-black text-white flex items-center justify-center text-2xl shadow-2xl border border-brand-border cursor-pointer transition-all">
@@ -594,7 +594,7 @@
       </div>
 
       <!-- Media Player Container -->
-      <div id="modalMediaContainer" class="relative w-full bg-black flex items-center justify-center flex-grow overflow-hidden">
+      <div id="modalMediaContainer" class="relative w-full bg-black flex items-center justify-center flex-grow">
         <!-- Media dynamically inserted here -->
       </div>
 
