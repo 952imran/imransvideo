@@ -108,6 +108,8 @@ function openModal(id) {
   const modalDesc = document.getElementById('modalDesc');
   const mediaContainer = document.getElementById('modalMediaContainer');
   const modalWhatsAppBtn = document.getElementById('modalWhatsAppBtn');
+  const modalDirectPlayBtn = document.getElementById('modalDirectPlayBtn');
+  const modalDirectPlayText = document.getElementById('modalDirectPlayText');
 
   modalTitle.textContent = item.title;
   modalDesc.textContent = item.description;
@@ -122,13 +124,13 @@ function openModal(id) {
     videoId = match ? match[1] : '';
   }
 
-  // Sizing based on aspect ratio with strict max-height
+  // Sizing based on aspect ratio with mobile-responsive minimum height
   if (item.aspectRatio === 'vertical') {
-    modalBox.className = 'bg-brand-card border border-brand-border rounded-2xl w-full max-w-[360px] max-h-[90vh] overflow-hidden relative shadow-2xl z-10 flex flex-col transition-all';
-    mediaContainer.className = 'relative w-full aspect-[9/16] max-h-[64vh] bg-black flex items-center justify-center overflow-hidden';
+    modalBox.className = 'bg-brand-card border border-brand-border rounded-2xl w-full max-w-[360px] max-h-[92vh] overflow-hidden relative shadow-2xl z-10 flex flex-col transition-all';
+    mediaContainer.className = 'relative w-full aspect-[9/16] min-h-[360px] max-h-[64vh] bg-black flex items-center justify-center overflow-hidden';
   } else {
-    modalBox.className = 'bg-brand-card border border-brand-border rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden relative shadow-2xl z-10 flex flex-col transition-all';
-    mediaContainer.className = 'relative w-full aspect-video max-h-[64vh] bg-black flex items-center justify-center overflow-hidden';
+    modalBox.className = 'bg-brand-card border border-brand-border rounded-2xl w-full max-w-3xl max-h-[92vh] overflow-hidden relative shadow-2xl z-10 flex flex-col transition-all';
+    mediaContainer.className = 'relative w-full aspect-video min-h-[230px] sm:min-h-[380px] bg-black flex items-center justify-center overflow-hidden';
   }
 
   // Render Media: Google Drive Preview OR MP4 Video OR YouTube Embed OR Image
@@ -137,19 +139,25 @@ function openModal(id) {
       <iframe 
         src="${item.videoUrl}" 
         title="${item.title}" 
-        class="w-full h-full border-0 rounded-lg" 
+        class="w-full h-full min-h-[230px] sm:min-h-[380px] border-0 rounded-lg" 
         allow="autoplay; fullscreen" 
         allowfullscreen>
       </iframe>
     `;
+    if (modalDirectPlayBtn) {
+      modalDirectPlayBtn.href = item.videoUrl.replace('/preview', '/view');
+      if (modalDirectPlayText) modalDirectPlayText.textContent = 'Watch Full HD';
+      modalDirectPlayBtn.classList.remove('hidden');
+    }
   } else if (item.videoUrl && (item.videoUrl.endsWith('.mp4') || item.videoUrl.endsWith('.webm') || item.videoType === 'mp4')) {
     mediaContainer.innerHTML = `
       <video src="${item.videoUrl}" controls autoplay playsinline class="w-full h-full object-contain bg-black rounded-lg"></video>
     `;
+    if (modalDirectPlayBtn) modalDirectPlayBtn.classList.add('hidden');
   } else if (videoId) {
     mediaContainer.innerHTML = `
       <iframe 
-        src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0" 
+        src="https://www.youtube.com/embed/${videoId}?autoplay=1&playsinline=1&rel=0&modestbranding=1" 
         title="${item.title}" 
         class="w-full h-full border-0" 
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -157,10 +165,18 @@ function openModal(id) {
         allowfullscreen>
       </iframe>
     `;
+    if (modalDirectPlayBtn) {
+      modalDirectPlayBtn.href = item.aspectRatio === 'vertical' 
+        ? `https://youtube.com/shorts/${videoId}` 
+        : `https://www.youtube.com/watch?v=${videoId}`;
+      if (modalDirectPlayText) modalDirectPlayText.textContent = 'Watch on YouTube';
+      modalDirectPlayBtn.classList.remove('hidden');
+    }
   } else if (item.imageUrl || item.thumbnail) {
     mediaContainer.innerHTML = `
       <img src="${item.imageUrl || item.thumbnail}" alt="${item.title}" class="w-full h-full object-contain">
     `;
+    if (modalDirectPlayBtn) modalDirectPlayBtn.classList.add('hidden');
   }
 
   // Pre-fill WhatsApp inquiry message
